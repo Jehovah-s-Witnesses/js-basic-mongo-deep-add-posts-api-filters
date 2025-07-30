@@ -5,8 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "vitest",
+    "test": "vitest --run",
     "format": "prettier src/**/*.js --check",
+    "migrate": "node migration/migrate.js",
     "start": "nodemon src/index.js"
   },
   "keywords": [],
