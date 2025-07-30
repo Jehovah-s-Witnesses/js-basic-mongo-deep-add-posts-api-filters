@@ -68,6 +68,8 @@ All of this are required
 `http://127.0.0.1:4043/api/posts?limit=absd&offset=20`
 `http://127.0.0.1:4043/api/posts?limit=9&offset=sdgsdg`
 
+And for this new params you need send in response quantity of items equal of limit, and you need skip items from offset param.
+
 ### You need to change the response
 
 Now we have response with array of posts, but neef to change in next format
@@ -80,10 +82,12 @@ Now we have response with array of posts, but neef to change in next format
 ```
 
 All data need send in `items` property but for count need get count of documents and set to field `count` in response. Check link about it in this doc
+Dont forget to change schema for reply
 
 
 ### Links
 
+[About querystring in fastify](https://fastify.dev/docs/latest/Reference/Validation-and-Serialization/#validation)
 [Limit in mongo](https://mongoosejs.com/docs/api/query.html#Query.prototype.limit())
 [Skip in mongo](https://mongoosejs.com/docs/api/query.html#Query.prototype.skip())
 [Count of documents in mongo](https://mongoosejs.com/docs/api/query.html#Query.prototype.countDocuments())
