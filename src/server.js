@@ -33,22 +33,30 @@ server.get(
       },
       response: {
         200: {
-          type: 'array',
-          items: {
-            $id: 'Post',
-            type: 'object',
-            properties: {
-              _id: {
-                type: 'string',
-              },
-              text: {
-                type: 'string',
-              },
-              author: {
-                type: 'string',
-              },
-              rating: {
-                type: 'number',
+          type: 'object',
+          properties: {
+            count: {
+              type: 'integer',
+            },
+            items: {
+              type: 'array',
+              items: {
+                $id: 'Post',
+                type: 'object',
+                properties: {
+                  _id: {
+                    type: 'string',
+                  },
+                  text: {
+                    type: 'string',
+                  },
+                  author: {
+                    type: 'string',
+                  },
+                  rating: {
+                    type: 'number',
+                  },
+                },
               },
             },
           },
@@ -58,9 +66,10 @@ server.get(
   },
   async (request, reply) => {
     const { limit, offset } = request.query;
+    const count = await Post.countDocuments();
 
     const posts = await Post.find().skip(offset).limit(limit).lean();
 
-    reply.send(posts);
+    reply.send({ count, items: posts });
   },
 );
