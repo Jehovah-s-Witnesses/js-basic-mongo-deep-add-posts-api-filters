@@ -16,6 +16,21 @@ server.get(
   {
     schema: {
       tags: ['Post'],
+      querystring: {
+        type: 'object',
+        properties: {
+          limit: {
+            type: 'integer',
+            minimum: 1,
+            maximum: 10,
+          },
+          offset: {
+            type: 'integer',
+            minimum: 0,
+          },
+        },
+        required: ['limit', 'offset'],
+      },
       response: {
         200: {
           type: 'array',
@@ -42,7 +57,9 @@ server.get(
     },
   },
   async (request, reply) => {
-    const posts = await Post.find().lean();
+    const { limit, offset } = request.query;
+
+    const posts = await Post.find().skip(offset).limit(limit).lean();
 
     reply.send(posts);
   },
